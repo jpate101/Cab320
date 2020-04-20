@@ -27,6 +27,7 @@ import sokoban
 import math
 
 from sokoban import Warehouse
+# Checking if I can edit.
 from search import astar_graph_search as astar_graph
 from sokoban import find_2D_iterator
 
