@@ -945,11 +945,11 @@ def solve_sokoban_macro(warehouse):
             for box in current_warehouse.boxes:             
                 h += math.sqrt(((box[1] - target[1])**2) + ((box[0] - target[0])**2))
         return h
+    #solve path  
     macro_puzzle = macro_sokoban_test(warehouse)
     Path = search.astar_graph_search(macro_puzzle,h)
 
     #extract path steps
-    #print(str(Path))
     if Path == None:
         return "Impossible"    
     path_steps = Path.path()
