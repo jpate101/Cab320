@@ -40,8 +40,8 @@ def my_team():
     of triplet of the form (student_number, first_name, last_name)
     
     '''
-#    return [ (10193197, 'Joshua', 'Paterson'), (9693301, 'Kenny', 'Stowe'), (10063285, 'Nicholas', 'Kelly') ]
-    raise NotImplementedError()
+    return [ (10193197, 'Joshua', 'Paterson'), (9693301, 'Kenny', 'Stowe'), (10063285, 'Nicholas', 'Kelly') ]
+
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 '''
