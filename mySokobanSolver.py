@@ -49,6 +49,9 @@ convert_2d_array converts warehouse to 2d array
 params
 warehouse = a warehouse object
 '''
+#convert warehouse to 2d array
+    #params
+    #warehouse_array = 2d array of warehouse
 def convert_2d_array(warehouse):
     # get string representation
     warehouse_str = str(warehouse)
