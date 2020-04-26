@@ -82,8 +82,6 @@ def taboo_cells(warehouse):
        The returned string should NOT have marks for the worker, the targets,
        and the boxes.  
     '''
-    ##         "INSERT YOUR CODE HERE"
-    #raise NotImplementedError
 
     #scan offset walls for rows
     #used in rule 2 to see if to connect taboo cells
@@ -316,16 +314,6 @@ class SokobanPuzzle(search.Problem):
     return elementary actions.        
     '''
     
-    #
-    #         "INSERT YOUR CODE HERE"
-    #
-    #     Revisit the sliding puzzle and the pancake puzzle for inspiration!
-    #
-    #     Note that you will need to add several functions to 
-    #     complete this class. For example, a 'result' function is needed
-    #     to satisfy the interface of 'search.Problem'.
-
-    
     def __init__(self, warehouse,macro,taboo):
         self.warehouse = warehouse
         self.initial = warehouse
@@ -420,46 +408,7 @@ class SokobanPuzzle(search.Problem):
 
         
         return possible_actions
-        #raise NotImplementedError
-    
-##    def result(self, state, action):
-##        print("---result-----")
-##        print(str(state))
-##        print(str(action))
-##        # Extract the warehouse state space
-##        state_space = sokoban.Warehouse()
-##        warehouse_str = str(state)
-##        state_space.extract_locations(warehouse_str.split(sep="\n"))
-##        box_loc = action[0]
-##        if box_loc in state_space.boxes:
-##            if action[1] == 'Right':
-##                move = 1, 0
-##                state_space.worker = box_loc
-##                state_space.boxes.remove(box_loc)
-##                state_space.boxes.append(box_loc[0] + move[0], box_loc[1] + move[1])
-##                return action, str(state_space)
-##            if action[1] == 'Left':
-##                move = -1, 0
-##                state_space.worker = box_loc
-##                state_space.boxes.remove(box_loc)
-##                state_space.boxes.append(box_loc[0] + move[0], box_loc[1] + move[1])
-##                return action, str(state_space)
-##            if action[1] == 'Up':
-##                move = 0, -1
-##                state_space.worker = box_loc
-##                state_space.boxes.remove(box_loc)
-##                state_space.boxes.append(box_loc[0] + move[0], box_loc[1] + move[1])
-##                return action, str(state_space)
-##            if action[1] == 'Down':
-##                move = 0, 1
-##                state_space.worker = box_loc
-##                state_space.boxes.remove(box_loc)
-##                state_space.boxes.append(box_loc[0] + move[0], box_loc[1] + move[1])
-##                return action, str(state_space)
-##            else:
-##                return ('No Action')
-##        else:
-##            return ('Error')
+
     def result(self, state, action):
         print("---result-----")
         print(str(state))
@@ -491,9 +440,6 @@ class SokobanPuzzle(search.Problem):
     def goal_test(self, state):
         # Check that the state warehouse has all targets filled.
         return str(state) == self.goal
-##
-##    def value(self, state):
-##        return 1  # Changes have a cost of 1
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -521,7 +467,6 @@ def check_elem_action_seq(warehouse, action_seq):
                string returned by the method  Warehouse.__str__()
     '''
     
-    ##         "INSERT YOUR CODE HERE
     # Convert warehouse object to two-dimensional list
     warehouse_2d = convert_2d_array(warehouse)
     
@@ -625,9 +570,6 @@ def check_elem_action_seq(warehouse, action_seq):
     warehouse_str = '\n'.join([''.join(line) for line in warehouse_2d])
     
     return warehouse_str
-    
-    
-
 
     raise NotImplementedError()
 
@@ -961,8 +903,6 @@ def solve_sokoban_macro(warehouse):
         If the puzzle is already in a goal state, simply return []
     '''
     
-    ##         "INSERT YOUR CODE HERE"
-    #
     # specify heuristic
     def h(n):
         state = n.state
