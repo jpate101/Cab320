@@ -650,12 +650,12 @@ def can_go_there_elem(warehouse, dst):
         return math.sqrt(((state[1] - dst[1]) ** 2)
                          + ((state[0] - dst[0]) ** 2))
     # Extract the warehouse
-    current_warehouse = sokoban.Warehouse()
+    wh = sokoban.Warehouse()
     # get string representation
     warehouse_str = str(warehouse)
-    current_warehouse.extract_locations(warehouse_str.split(sep="\n"))
+    wh.extract_locations(warehouse_str.split(sep="\n"))
     # execute a*_graph_search to solve the puzzle
-    frontier = search.astar_graph_search(CGT_sokoban_test(current_warehouse,dst),h)
+    frontier = search.astar_graph_search(CGT_sokoban_test(wh,dst),h)
     # If a node was found, this is a valid destination
     if frontier == None:
         return []
@@ -675,7 +675,7 @@ def can_go_there_elem(warehouse, dst):
             path.append('Left')
                                                                     
         # move worker to new position
-    warehouse.worker = flip_tuple(dst)
+    
     print(path)
     return path
     
@@ -696,17 +696,15 @@ def solve_sokoban_elem(warehouse):
             For example, ['Left', 'Down', Down','Right', 'Up', 'Down']
             If the puzzle is already in a goal state, simply return []
     '''
-    #macro = [((1, 3), 'Right'), ((1, 4), 'Right')] # List of macro actions
+    
     state_space = (str(warehouse))
     wh = Warehouse()    
     wh.from_string(state_space)
     macro = solve_sokoban_macro(wh)
-    print(wh)
     warehouse_str = str(warehouse)
     goal_state = warehouse_str.replace("$", " ").replace(".", "*")
-    elem_actions = []
-     # list of elementary actions
-    
+    elem_actions = [] # list of elementary actions
+     
     # Check if already in goal state
     if warehouse_str == goal_state:
         return []
@@ -716,44 +714,32 @@ def solve_sokoban_elem(warehouse):
     
     for path_step in macro:
         target_box = path_step[0]
-        print(target_box, 'TARGET BOX')
         push_direction = path_step[1]
+        
         if push_direction == 'Right':
-            offset = (0, -1)
+            result = (0, -1)
         elif push_direction == 'Left':
-            offset = (0, 1)
+            result = (0, 1)
         elif push_direction == 'Up':
-            offset = (1, 0)
+            result = (1, 0)
         elif push_direction == 'Down':
-            offset = (-1, 0)    
-        worker_pos = add_tuples(target_box, offset)
-        print(worker_pos, 'GOAL POS')
-        print(flip_tuple(warehouse.worker), 'WORKER POS')
-        
-        
-        
-                    
+            result = (-1, 0)  
+            
+        worker_pos = add_tuples(target_box, result) # go to position
+           
         def h(n):
             state = n.state
             current_warehouse = sokoban.Warehouse()
-            #worker_pos = add_tuples(target, offset)
             warehouse_str = str(state)
             current_warehouse.extract_locations(warehouse_str.split(sep="\n"))
             h = 0
             for box in current_warehouse.boxes: #box
-                
                 h += math.sqrt(((worker_pos[1] - box[1])**2) + ((worker_pos[0] - box[0])**2))
             return h
-        
 
-            
-        
-                                
-        
-        
-        if worker_pos != flip_tuple(warehouse.worker):
+        if worker_pos != flip_tuple(wh.worker):
             elem_actions.extend(can_go_there_elem(wh,worker_pos))
-            
+        
         frontier = search.astar_graph_search(macro_sokoban_test(wh), h)
         
         if frontier is None:
@@ -762,41 +748,33 @@ def solve_sokoban_elem(warehouse):
         for node in frontier.path():
             
             if node.action == (0, 1):
-                #direction = 'Down'
                 elem_actions.append('Down')
             elif node.action == (0, -1):
-                #direction = 'Up'
                 elem_actions.append('Up')
             elif node.action == (1, 0):
-                #direction = 'Right'
                 elem_actions.append('Right')
             elif node.action == (-1, 0):
-                #direction = 'Left'
                 elem_actions.append('Left')
-        print(elem_actions, '1')                                            
-        # add the actual push action
+                                          
         elem_actions.append(push_direction)
-        print(elem_actions, '2')
                                                
         # move target box to new position
-        
-        warehouse.boxes.remove(flip_tuple(target_box))
+        wh.boxes.remove(flip_tuple(target_box))
             
         if push_direction == "Down":
-            offset = (0, 1)
+            result = (0, 1)
         elif push_direction == "Up":
-            offset = (0, -1)
+            result = (0, -1)
         elif push_direction == "Right":
-            offset = (1, 0)
+            result = (1, 0)
         elif push_direction == "Left":
-            offset = (-1, 0)
-        new_box_loc = add_tuples(flip_tuple(target_box), offset)
-        warehouse.boxes.append(new_box_loc)
+            result = (-1, 0)
+            
+        new_box_loc = add_tuples(flip_tuple(target_box), result)
+        wh.boxes.append(new_box_loc)
                                                                     
         # move worker to new position
-        warehouse.worker = flip_tuple(target_box)
-        print(flip_tuple(warehouse.worker), 'WORKER NEW')
-        print(elem_actions)
+        wh.worker = flip_tuple(target_box)
                                                                     
     return elem_actions
 
