@@ -96,20 +96,15 @@ def taboo_cells(warehouse):
                 return False
             if warehouse_array[y+1][i] != '#':
                 down = 1
-                #print("down "+str(i)+' '+str(y))
             if warehouse_array[y-1][i] != '#':
                 top = 1
-                #print("top "+str(i)+' '+str(y))
             if(top == 1):
                 if(down == 1):
-                    #print("here")
                     return False
                  
         for i in range(x1,x2):
-            #print(str(i)+' '+str(y))
             if(warehouse_array[y+1][i] != '#' and warehouse_array[y-1][i] != '#'):
                 return False
-        #print("end")
         return True
     #scan offset walls for collumns
     #used in rule 2 to see if to connect taboo cells
@@ -120,25 +115,19 @@ def taboo_cells(warehouse):
     def scan_offset_wall_y(warehouse_array, y1, y2, x):
         right = 0
         left = 0
-        #print("offset start "+str(y1)+' '+str(y2)+' '+str(x))
         for i in range(y1+1,y2-1):
             if(warehouse_array[i][x] != ' '):
                 return False
             if warehouse_array[i][x+1] != '#':
                 right = 1
-                #print("right "+str(i)+' '+str(x))
             if warehouse_array[i][x-1] != '#':
                 left = 1
-                #print("left "+str(i)+' '+str(x))
             if(right == 1):
                 if(left == 1):
-                    #print("here")
                     return False
         for i in range(y1,y2):
-            #print(str(i)+' '+ str(x))
             if(warehouse_array[i][x+1] != '#' and warehouse_array[i][x-1] != '#'):
-                return False
-        #print("end")    
+                return False 
         return True
     #rule 1 scan for corner cells
     #params
@@ -174,7 +163,6 @@ def taboo_cells(warehouse):
                 if is_corner_cell(warehouse_2d, x, y) == True:
                     #print taboo cells and check if between first and last of each wall
                     if warehouse_2d[y][x] != '#' or 'X' or '.' or '!' or '*':
-                        #print(str(wall_start_y)+' '+str(wall_end_y)+' '+str(x))
                         if wall_start >= wall_count:
                             pass
                         elif wall_end <= wall_count:
@@ -255,7 +243,6 @@ def taboo_cells(warehouse):
                 right = 1
             if warehouse_array[y][x - 1] == '#':
                 left = 1
-            #if up + right == 2 or up + left == 2 or down + right == 2 or down + left:
             if up + left >= 2:
                 return True
             elif down + right >= 2:
@@ -660,13 +647,10 @@ def solve_sokoban_elem(warehouse):
             If the puzzle is already in a goal state, simply return []
     '''
     #macro = [((1, 3), 'Right'), ((1, 4), 'Right')] # List of macro actions
-    #puzzle_t2 = ("<Node "+str(warehouse))
-    #print(str(warehouse)+"\n_________")
     puzzle_t2 = (str(warehouse))
     wh = Warehouse()    
     wh.from_string(puzzle_t2)
     macro = solve_sokoban_macro(wh)
-    #print(str(macro))
     
     warehouse_str = str(warehouse)
     goal_state = warehouse_str.replace("$", " ").replace(".", "*")
@@ -694,7 +678,6 @@ def solve_sokoban_elem(warehouse):
                             
         def h(n):
             state = n.state
-            #print(str(state))
             current_warehouse = sokoban.Warehouse()
             #worker_pos = add_tuples(target, offset)
             warehouse_str = str(state)
@@ -706,7 +689,6 @@ def solve_sokoban_elem(warehouse):
             return h
                        
         frontier = search.astar_graph_search(macro_sokoban_test(wh), h)
-        #print(str(frontier))
                                 
         if frontier is None:
             return 'Impossible'
@@ -936,7 +918,6 @@ def solve_sokoban_macro(warehouse):
     # specify heuristic
     def h(n):
         state = n.state
-        #print(str(state))
         current_warehouse = sokoban.Warehouse()
         warehouse_str = str(state)
         current_warehouse.extract_locations(warehouse_str.split(sep="\n"))
